@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Table, Button, Modal } from "react-bootstrap";
+import { Table, Button, Modal, Form, InputGroup } from "react-bootstrap";
 
 const GetUsers = () => {
   const [documents, setDocuments] = useState([]);
@@ -25,51 +25,113 @@ const GetUsers = () => {
 
   const EditModel = (props) => {
     return (
-      
-      <Modal {...props}  size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+      <Modal
+        {...props}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
         <Modal.Header closeButton>
-          <Modal.Title className="text-center">
-            Edit User
-          </Modal.Title>
+          <Modal.Title className="fs-2 px-3">Edit User</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <h4>Centered Modal</h4>
-          <p>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-            ac consectetur ac, vestibulum at eros.
-          </p>
+        <Modal.Body as="div" className="px-5">
+          <Form className="px-5">
+            <Form.Group className="my-4">
+              <InputGroup className="mb-3" size="md">
+                <InputGroup.Text id="basic-addon1">
+                  <i className="fa-solid fa-user-large icons"></i>
+                </InputGroup.Text>
+                <Form.Control
+                  type="text"
+                  placeholder="User Name..."
+                  name="userName"
+                  // onChange={handleChange}
+                />
+              </InputGroup>
+            </Form.Group>
+            <Form.Group className="my-4">
+              <InputGroup className="mb-3" size="md">
+                <InputGroup.Text id="basic-addon1">
+                  <i className="fa-solid fa-envelope icons"></i>
+                </InputGroup.Text>
+                <Form.Control
+                  type="text"
+                  placeholder="Email..."
+                  name="email"
+                  // onChange={handleChange}
+                />
+              </InputGroup>
+            </Form.Group>
+            <Form.Group className="my-4">
+              <InputGroup className="mb-3" size="md">
+                <InputGroup.Text id="basic-addon1">
+                  <i className="fa-solid fa-key icons"></i>
+                </InputGroup.Text>
+                <Form.Control
+                  type="password"
+                  placeholder="Password..."
+                  name="password"
+                  // onChange={handleChange}
+                />
+              </InputGroup>
+            </Form.Group>
+            <Form.Group className="my-4">
+              <InputGroup className="mb-3" size="md">
+                <InputGroup.Text id="basic-addon1">
+                  <i className="fa-solid fa-phone-flip icons"></i>
+                </InputGroup.Text>
+                <Form.Control
+                  type="text"
+                  placeholder="Mobile No..."
+                  name="mobileNo"
+                  // onChange={handleChange}
+                />
+              </InputGroup>
+            </Form.Group>
+          </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="bg-dark">Close</Button>
+          <Button
+            variant="outline-secondary"
+            className="w-25"
+            onClick={() => setShowEditModal(false)}
+          >
+            Cancle
+          </Button>
           <Button>Update Data</Button>
         </Modal.Footer>
       </Modal>
     );
-  }
+  };
   const DeleteModel = (props) => {
     return (
-      
-      <Modal {...props}  size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
-        <Modal.Header closeButton >
-          <Modal.Title>
-            Delete Data
-          </Modal.Title>
+      <Modal {...props} centered>
+        <Modal.Header closeButton className="px-4">
+          <Modal.Title className="fs-2">Delete Account</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>Centered Modal</h4>
-          <p>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-            ac consectetur ac, vestibulum at eros.
+          <p className="px-2 fs-5">
+            Are you sure you want to delete your account? <br />
+            If you delete your account, you will permanently lose your profile.
           </p>
         </Modal.Body>
-        <Modal.Footer>
-          <Button className="">Close</Button>
+        <Modal.Footer
+          as="div"
+          className="d-flex justify-content-around align-items-center"
+        >
+          <Button
+            variant="outline-secondary"
+            className="w-25"
+            onClick={() => setShowDeleteModel(false)}
+          >
+            Cancle
+          </Button>
+          <Button variant="danger" className="w-25">
+            Delete
+          </Button>
         </Modal.Footer>
       </Modal>
     );
-  }
+  };
   return (
     <div className="container">
       <div className="container form-section  pt-5 border">
@@ -92,10 +154,18 @@ const GetUsers = () => {
                   <td key={i}>{doc.email}</td>
                   <td key={i}>{doc.mobileNo}</td>
                   <td className="d-flex justify-content-center align-items-center">
-                    <Button variant="danger" className="mx-3" onClick={() => setShowDeleteModel(true)}>
+                    <Button
+                      variant="danger"
+                      className="mx-3"
+                      onClick={() => setShowDeleteModel(true)}
+                    >
                       Delete
                     </Button>
-                    <Button variant="primary" className="w-25" onClick={() => setShowEditModal(true)}>
+                    <Button
+                      variant="primary"
+                      className="w-25"
+                      onClick={() => setShowEditModal(true)}
+                    >
                       Edit
                     </Button>
                   </td>
@@ -104,14 +174,14 @@ const GetUsers = () => {
             })}
           </tbody>
         </Table>
-      <EditModel
-        show={showEditModel}
-        onHide={() => setShowEditModal(false)}
-      />
-      <DeleteModel
-        show={showDeleteModel}
-        onHide={() => setShowDeleteModel(false)}
-      />
+        <EditModel
+          show={showEditModel}
+          onHide={() => setShowEditModal(false)}
+        />
+        <DeleteModel
+          show={showDeleteModel}
+          onHide={() => setShowDeleteModel(false)}
+        />
       </div>
     </div>
   );
