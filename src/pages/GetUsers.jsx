@@ -1,13 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Table, Button, Modal, Form, InputGroup } from "react-bootstrap";
+import { Table, Button, Modal, Form, InputGroup , Spinner } from "react-bootstrap";
 
 const GetUsers = () => {
   const [documents, setDocuments] = useState([]);
   const [showEditModel, setShowEditModal] = useState(false);
   const [showDeleteModel, setShowDeleteModel] = useState(false);
-  // const [isLoading, setIsLoading] = useState(true);
-
+  const [isLoading, setIsLoading] = useState(true);
+  const [singleDoc, setSingleDoc] = useState({});
   const URL = "http://localhost:8000";
 
   useEffect(() => {
@@ -18,10 +18,11 @@ const GetUsers = () => {
       })
       .catch((err) => {
         console.error(err);
-      });
-    // setIsLoading(false);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      })
   }, []);
-  console.log(`documents`, documents);
 
   const EditModel = (props) => {
     return (
@@ -30,7 +31,7 @@ const GetUsers = () => {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className="px-4">
           <Modal.Title className="fs-2 px-3">Edit User</Modal.Title>
         </Modal.Header>
         <Modal.Body as="div" className="px-5">
@@ -44,7 +45,6 @@ const GetUsers = () => {
                   type="text"
                   placeholder="User Name..."
                   name="userName"
-                  // onChange={handleChange}
                 />
               </InputGroup>
             </Form.Group>
@@ -57,7 +57,6 @@ const GetUsers = () => {
                   type="text"
                   placeholder="Email..."
                   name="email"
-                  // onChange={handleChange}
                 />
               </InputGroup>
             </Form.Group>
@@ -70,7 +69,6 @@ const GetUsers = () => {
                   type="password"
                   placeholder="Password..."
                   name="password"
-                  // onChange={handleChange}
                 />
               </InputGroup>
             </Form.Group>
@@ -83,7 +81,6 @@ const GetUsers = () => {
                   type="text"
                   placeholder="Mobile No..."
                   name="mobileNo"
-                  // onChange={handleChange}
                 />
               </InputGroup>
             </Form.Group>
@@ -102,6 +99,28 @@ const GetUsers = () => {
       </Modal>
     );
   };
+  const handleDelete = () => {
+
+    const { _id } = singleDoc
+    console.log(_id);
+    axios.delete(`${URL}/deleteUser/${_id}`)
+      .then((res) => {
+        console.log("User deleted")
+        console.log("message from server", res.data)
+        setDocuments(res.data)
+      }).catch((err) => {
+        console.error(err)
+      })
+  }
+
+const showDeleteModal = (doc)=>{
+
+  setShowDeleteModel(true)
+  console.log(doc)
+  setSingleDoc(doc);
+
+}
+
   const DeleteModel = (props) => {
     return (
       <Modal {...props} centered>
@@ -125,7 +144,7 @@ const GetUsers = () => {
           >
             Cancle
           </Button>
-          <Button variant="danger" className="w-25">
+          <Button variant="danger" className="w-25" onClick={handleDelete}>
             Delete
           </Button>
         </Modal.Footer>
@@ -146,18 +165,19 @@ const GetUsers = () => {
             </tr>
           </thead>
           <tbody>
+            {isLoading ? <tr><Spinner animation="grow" as={"td"} /></tr> : <>
             {documents.map((doc, i) => {
               return (
-                <tr className="text-center fs-5">
-                  <td key={i}>{i}</td>
-                  <td key={i}>{doc.userName}</td>
-                  <td key={i}>{doc.email}</td>
-                  <td key={i}>{doc.mobileNo}</td>
+                <tr className="text-center fs-5" key={i}>
+                  <td >{i}</td>
+                  <td >{doc.userName}</td>
+                  <td >{doc.email}</td>
+                  <td >{doc.mobileNo}</td>
                   <td className="d-flex justify-content-center align-items-center">
                     <Button
                       variant="danger"
                       className="mx-3"
-                      onClick={() => setShowDeleteModel(true)}
+                      onClick={() => showDeleteModal(doc)}
                     >
                       Delete
                     </Button>
@@ -172,6 +192,7 @@ const GetUsers = () => {
                 </tr>
               );
             })}
+            </>}
           </tbody>
         </Table>
         <EditModel
