@@ -26,8 +26,8 @@ const Create_User = () => {
     axios.post(`${URL}/createUsers`, formData)
       .then(() => {
         toast.success("User created Succesfullty!", {
-          position: "bottom-left",
-          autoClose: 5000,
+          position: "bottom-right",
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -38,8 +38,8 @@ const Create_User = () => {
       })
       .catch((err) => {
         toast.error(err, {
-          position: "bottom-left",
-          autoClose: 5000,
+          position: "bottom-right",
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
