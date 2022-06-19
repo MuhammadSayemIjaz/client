@@ -9,13 +9,14 @@ import {
   Spinner,
 } from "react-bootstrap";
 import { toast } from "react-toastify";
+
 const GetUsers = () => {
   const [documents, setDocuments] = useState([]);
   const [showEditModel, setShowEditModel] = useState(false);
   const [showDeleteModel, setShowDeleteModel] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [singleDoc, setSingleDoc] = useState({});
-  const [newDoc, setNewDoc] = useState({});
+  const [state, setState] = useState({ userName: "", email: "", mobileNo: "" });
 
   const URL = "http://localhost:8000";
 
@@ -33,13 +34,14 @@ const GetUsers = () => {
       });
   }, []);
 
-  const handleUpdateDoc = (doc) => {
-    console.log(`doc`, doc);
-  }
-  // const handleUpdate = () => {
-  //   console.log(doc)
+  const handleChangeFor = (e) => {
+    console.log(e.target.value)
+    setState((s) => ({ ...s, [e.target.name]: e.target.value }));
+  };
+  const handleUpdateDoc = () => {
+    console.log(state._id)
 
-  // let newData = { id: doc._id, name: "Ahmad", age: 25 }
+  let newData = { id: state._id, userName: state.userName, age: 25 }
 
   //   axios.put(`${URL}/updateUser`, newData)
   //     .then((res) => {
@@ -50,10 +52,11 @@ const GetUsers = () => {
   //       console.error(err)
   //     })
 
-  // }
+  }
   const showEditModal = (doc) => {
     setShowEditModel(true);
-    setNewDoc(doc);
+    console.log(doc)
+    setState(doc);
   };
 
   const EditModel = (props) => {
@@ -77,8 +80,9 @@ const GetUsers = () => {
                   type="text"
                   placeholder="User Name..."
                   name="userName"
-                  value={newDoc.userName}
-                  onChange={(e) => handleUpdateDoc(e.target.value)}
+                  value={state.userName}
+                  onChange={handleChangeFor}
+                  // onChange={(e) => setState(s=>({...s, userName: e}))}
                 />
               </InputGroup>
             </Form.Group>
@@ -91,6 +95,8 @@ const GetUsers = () => {
                   type="email"
                   placeholder="Email..."
                   name="email"
+                  value={state.email}
+                  onChange={handleChangeFor}
                 />
               </InputGroup>
             </Form.Group>
@@ -103,6 +109,9 @@ const GetUsers = () => {
                   type="text"
                   placeholder="Mobile No..."
                   name="mobileNo"
+                  value={state.mobileNo}
+                  onChange={handleChangeFor}
+                  // onChange={(e) => setState(s=>({...s, mobileNo: e}))}
                 />
               </InputGroup>
             </Form.Group>
@@ -116,7 +125,7 @@ const GetUsers = () => {
           >
             Cancle
           </Button>
-          <Button>Update Data</Button>
+          <Button onClick={handleUpdateDoc}>Update Data</Button>
         </Modal.Footer>
       </Modal>
     );
@@ -208,7 +217,11 @@ const GetUsers = () => {
           <tbody>
             {isLoading ? (
               <tr>
-                <Spinner animation="grow" as={"td"} />
+                <Spinner
+                  animation="grow"
+                  as={"td"}
+                  className="text-black fs-2 text-center"
+                />
               </tr>
             ) : (
               <>
