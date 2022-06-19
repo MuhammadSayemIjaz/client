@@ -41,16 +41,17 @@ const GetUsers = () => {
   const handleUpdateDoc = () => {
     console.log(state._id)
 
-  let newData = { id: state._id, userName: state.userName, age: 25 }
-
-  //   axios.put(`${URL}/updateUser`, newData)
-  //     .then((res) => {
-  //       console.log("message from server", res.data)
-  //       alert("User has been successfully updated.")
-  //     })
-  //     .catch((err) => {
-  //       console.error(err)
-  //     })
+  let newData = { id: state._id, userName: state.userName, email: state.email , mobileNo : state.mobileNo }
+    console.log(newData);
+    axios.put(`${URL}/updateUser`, newData)
+      .then((res) => {
+        console.log("message from server", res.data)
+        alert("User has been successfully updated.")
+        setShowEditModel(false)
+      })
+      .catch((err) => {
+        console.error(err)
+      })
 
   }
   const showEditModal = (doc) => {
