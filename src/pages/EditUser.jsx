@@ -54,7 +54,7 @@ const Create_User = () => {
   return (
     <div className="container">
       <div className="container form-section">
-        <div className="mt-5 mx-auto col-lg-4 col-xl-5 col-md-8 col-sm-11 border rounded-3 shadow">
+        <div className="mt-5 mx-auto col-lg-4 col-md-8 col-sm-11 border rounded-3 shadow">
           <Form className="p-5" onSubmit={handleSubmit}>
             <h1 className="text-dark text-center pb-4 fw-bolder">
               Create User

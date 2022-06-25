@@ -1,51 +1,44 @@
 import axios from "axios";
-import React, { useEffect, useState , useRef } from "react";
-import {
-  Table,
-  Button,
-  Modal,
-  Form,
-  InputGroup,
-  Spinner,
-} from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Table, Button, Modal } from "react-bootstrap";
+import { ThreeCircles } from "react-loader-spinner";
 import { toast } from "react-toastify";
 
 const GetUsers = () => {
   const [documents, setDocuments] = useState([]);
-  const [showEditModel, setShowEditModel] = useState(false);
   const [showDeleteModel, setShowDeleteModel] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [singleDoc, setSingleDoc] = useState({});
   const [state, setState] = useState({});
 
   const URL = "http://localhost:8000";
-
-  const ref = useRef(null);
 
   useEffect(() => {
     axios
       .get(`${URL}/getUsers`)
       .then((res) => {
         setDocuments(res.data);
+        setIsLoading(true);
       })
       .catch((err) => {
         console.error(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
   }, []);
 
   const handleChangeFor = (e) => {
-    setState((s) => ({ ...s, [e.target.name]: e.target.value }));
+    setState({ ...state, [e.target.name]: e.target.value });
   };
-  const handleUpdateDoc = (e) => {
-    e.preventDefault();
-  let newData = { id: state._id, userName: state.userName, email: state.email , mobileNo : state.mobileNo }
-  console.log("New Data : " , newData);
-    axios.put(`${URL}/updateUser` , newData)
+  const handleUpdateDoc = () => {
+    let newData = {
+      id: state._id,
+      userName: state.userName,
+      email: state.email,
+      password : state.password,
+      mobileNo: state.mobileNo, 
+    };
+    console.log("New Data : ", newData);
+    axios.put(`${URL}/updateUser`, newData)
       .then((res) => {
-        console.log(res)
         toast.success("User has been successfully updated!", {
           position: "bottom-right",
           autoClose: 2000,
@@ -56,15 +49,11 @@ const GetUsers = () => {
           progress: undefined,
           theme: "colored",
         });
-        setShowEditModel(false)
         let newArray = documents.map((doc) => {
-
-          if(doc.id === state._id)
-              return console.log(...newData)
-          return doc
-      });
-      console.log(newArray);
-      setDocuments(newArray);
+        return (doc.id === state._id)? newData: doc;
+        });
+        console.log("newArray" , newArray);
+        setDocuments(newArray);
       })
       .catch((err) => {
         toast.error(err, {
@@ -77,96 +66,11 @@ const GetUsers = () => {
           progress: undefined,
           theme: "colored",
         });
-      })
-
-  }
+      });
+  };
   const showEditModal = (doc) => {
     setState(doc);
-    ref.current.click();
-    console.log(doc)
-  };
-
-  const EditModel = () => {
-    return (<>
-    <button type="button" ref={ref} className="btn btn-primary d-none"data-bs-toggle="modal"data-bs-target="#exampleModal"
-        data-bs-whatever="@getbootstrap"></button>
-      <div
-        className="modal fade"
-        id="exampleModal"
-        tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
-                Edit User
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <form>
-                <div className="mb-3">
-                  <label htmlFor="recipient-name" className="col-form-label">
-                    User Name:
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    name="userName"
-                    value={state.userName}
-                    onChange={handleChangeFor}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="message-text" className="col-form-label">
-                    Email:
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    name="email"
-                    value={state.email}
-                    onChange={handleChangeFor}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="message-text" className="col-form-label">
-                    Mobile No:
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    name="mobileNo"
-                    value={state.mobileNo}
-                    onChange={handleChangeFor}
-                  />
-                </div>
-              </form>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Cancle
-              </button>
-              <button type="button" className="btn btn-primary" onClick={(e) => handleUpdateDoc(e)}>
-                Update
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-    );
+    console.log(doc);
   };
 
   const handleDelete = () => {
@@ -240,54 +144,161 @@ const GetUsers = () => {
     );
   };
   return (
-    <div className="container">
-      <div className="container form-section  pt-5 ">
-        <Table striped bordered hover responsive>
-          <thead>
-            <tr className="text-center fs-4 bg-dark text-white">
-              <th>Sr.No</th>
-              <th>User_Name</th>
-              <th>Email</th>
-              <th>Mobile_No</th>
-              <th style={{width : "160px"}}>Acitvity</th>
-            </tr>
-          </thead>
-          <tbody>
-                {documents.map((doc, i) => {
-                  return (
-                    <tr className="text-center fs-5" key={i}>
-                      <td>{i}</td>
-                      <td>{doc.userName}</td>
-                      <td>{doc.email}</td>
-                      <td>{doc.mobileNo}</td>
-                      <td className="d-flex justify-content-around align-items-center flex-wrap">
-                        <div className="tableIcons" onClick={() => showEditModal(doc)}>
-                          <i className="fa-solid fa-pen-to-square " style={{color:"green"}} ></i>
-                        </div>
-                        <div className="tableIcons" onClick={() => showDeleteModal(doc)}>
-                          <i className="fa-solid fa-trash " style={{color:"red"}} ></i>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                }
-            )}
-          </tbody>
-        </Table>
-          {/* {isLoading ? '' : <div className="spinner-section text-center mt-5 pt-5">
-            <Spinner animation="border"/>
-            </div>} */}
-        {/* <EditModel
-          show={showEditModel}
-          onHide={() => setShowEditModel(false)}
-        /> */}
-        <EditModel/>
-        <DeleteModel
-          show={showDeleteModel}
-          onHide={() => setShowDeleteModel(false)}
-        />
+    <>
+      <button
+        type="button"
+        className="btn btn-primary d-none"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        data-bs-whatever="@getbootstrap"
+      ></button>
+      <div
+        className="modal fade"
+        id="exampleModal"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
+                Edit User
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <form>
+                <div className="mb-3">
+                  <label htmlFor="recipient-name" className="col-form-label">
+                    User Name:
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="userName"
+                    defaultValue={state.userName}
+                    onChange={handleChangeFor}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="message-text" className="col-form-label">
+                    Email:
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="email"
+                    defaultValue={state.email}
+                    onChange={handleChangeFor}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="message-text" className="col-form-label">
+                    Mobile No:
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="mobileNo"
+                    defaultValue={state.mobileNo}
+                    onChange={handleChangeFor}
+                  />
+                </div>
+              </form>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancle
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={(e) => handleUpdateDoc(e)}
+              >
+                Update
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+      <div className="container">
+        <div className="container form-section  pt-5 ">
+          <Table striped bordered hover responsive>
+            <thead>
+              <tr className="text-center fs-4 bg-dark text-white">
+                <th>Sr.No</th>
+                <th>User_Name</th>
+                <th>Email</th>
+                <th>Mobile_No</th>
+                <th style={{ width: "160px" }}>Acitvity</th>
+              </tr>
+            </thead>
+            <tbody>
+              {documents.map((doc, i) => {
+                return (
+                  <tr className="text-center fs-5" key={i}>
+                    <td>{i + 1}</td>
+                    <td>{doc.userName}</td>
+                    <td>{doc.email}</td>
+                    <td>{doc.mobileNo}</td>
+                    <td className="d-flex justify-content-around align-items-center flex-wrap">
+                      <div className="tableIcons">
+                        <button
+                          style={{ border: "none" }}
+                          onClick={() => showEditModal(doc)}
+                          data-bs-toggle="modal"
+                          data-bs-target="#exampleModal"
+                        >
+                          <i
+                            className="fa-solid fa-pen-to-square "
+                            style={{ color: "green" }}
+                          ></i>
+                        </button>
+                      </div>
+                      <div
+                        className="tableIcons"
+                        onClick={() => showDeleteModal(doc)}
+                      >
+                        <i
+                          className="fa-solid fa-trash "
+                          style={{ color: "red" }}
+                        ></i>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+          {isLoading ? (
+            ""
+          ) : (
+            <div className="spinner-section d-flex justify-content-center align-items-center  mt-5 pt-5">
+              <ThreeCircles
+                color="blue"
+                height={110}
+                width={110}
+                ariaLabel="three-circles-rotating"
+              />
+            </div>
+          )}
+          <DeleteModel
+            show={showDeleteModel}
+            onHide={() => setShowDeleteModel(false)}
+          />
+        </div>
+      </div>
+    </>
   );
 };
 
