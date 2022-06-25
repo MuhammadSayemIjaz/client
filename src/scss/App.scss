@@ -1,11 +1,12 @@
 @import "~bootstrap/scss/bootstrap";
 @import 'react-toastify/dist/ReactToastify.css';
 @import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 .links:hover {

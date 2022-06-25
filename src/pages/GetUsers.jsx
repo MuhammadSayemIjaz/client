@@ -9,7 +9,7 @@ const GetUsers = () => {
   const [showDeleteModel, setShowDeleteModel] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [singleDoc, setSingleDoc] = useState({});
-  const [state, setState] = useState({});
+  const [state, setState] = useState({ userName: "", email: "", age : "" , mobileNo: "" });
 
   const URL = "http://localhost:8000";
 
@@ -29,15 +29,16 @@ const GetUsers = () => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
   const handleUpdateDoc = () => {
-    let newData = {
+    let updateUser = {
       id: state._id,
       userName: state.userName,
       email: state.email,
-      password : state.password,
-      mobileNo: state.mobileNo, 
+      age : state.age,
+      mobileNo: state.mobileNo
     };
-    console.log("New Data : ", newData);
-    axios.put(`${URL}/updateUser`, newData)
+    console.log("updateUser", updateUser);
+    axios
+      .put(`${URL}/updateUser`, updateUser)
       .then((res) => {
         toast.success("User has been successfully updated!", {
           position: "bottom-right",
@@ -50,9 +51,9 @@ const GetUsers = () => {
           theme: "colored",
         });
         let newArray = documents.map((doc) => {
-        return (doc.id === state._id)? newData: doc;
+          return doc.id === state._id ? updateUser : doc;
         });
-        console.log("newArray" , newArray);
+        console.log("newArray", newArray);
         setDocuments(newArray);
       })
       .catch((err) => {
@@ -188,10 +189,22 @@ const GetUsers = () => {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="message-text" className="col-form-label">
+                    Age:
+                  </label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    name="age"
+                    defaultValue={state.age}
+                    onChange={handleChangeFor}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="message-text" className="col-form-label">
                     Email:
                   </label>
                   <input
-                    type="text"
+                    type="email"
                     className="form-control"
                     name="email"
                     defaultValue={state.email}
@@ -203,7 +216,7 @@ const GetUsers = () => {
                     Mobile No:
                   </label>
                   <input
-                    type="text"
+                    type="tel"
                     className="form-control"
                     name="mobileNo"
                     defaultValue={state.mobileNo}
@@ -238,6 +251,7 @@ const GetUsers = () => {
               <tr className="text-center fs-4 bg-dark text-white">
                 <th>Sr.No</th>
                 <th>User_Name</th>
+                <th>Age</th>
                 <th>Email</th>
                 <th>Mobile_No</th>
                 <th style={{ width: "160px" }}>Acitvity</th>
@@ -249,6 +263,7 @@ const GetUsers = () => {
                   <tr className="text-center fs-5" key={i}>
                     <td>{i + 1}</td>
                     <td>{doc.userName}</td>
+                    <td>{doc.age}</td>
                     <td>{doc.email}</td>
                     <td>{doc.mobileNo}</td>
                     <td className="d-flex justify-content-around align-items-center flex-wrap">

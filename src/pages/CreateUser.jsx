@@ -93,9 +93,9 @@ const Create_User = () => {
                   <i className="fa-solid fa-key icons"></i>
                 </InputGroup.Text>
                 <Form.Control
-                  type="password"
-                  placeholder="Password..."
-                  name="password"
+                  type="number"
+                  placeholder="Age..."
+                  name="age"
                   onChange={handleChange}
                   required
                 />
@@ -107,10 +107,11 @@ const Create_User = () => {
                   <i className="fa-solid fa-phone-flip icons"></i>
                 </InputGroup.Text>
                 <Form.Control
-                  type="text"
+                  type="tel"
                   placeholder="Mobile No..."
                   name="mobileNo"
                   onChange={handleChange}
+                  max={12}
                   required
                 />
               </InputGroup>
