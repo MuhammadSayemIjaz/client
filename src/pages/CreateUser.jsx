@@ -111,7 +111,7 @@ const Create_User = () => {
                   placeholder="Mobile No..."
                   name="mobileNo"
                   onChange={handleChange}
-                  max={12}
+                  maxLength={12}
                   required
                 />
               </InputGroup>

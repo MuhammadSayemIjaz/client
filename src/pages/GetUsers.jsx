@@ -36,7 +36,6 @@ const GetUsers = () => {
       age : state.age,
       mobileNo: state.mobileNo
     };
-    console.log("updateUser", updateUser);
     axios
       .put(`${URL}/updateUser`, updateUser)
       .then((res) => {
@@ -51,7 +50,7 @@ const GetUsers = () => {
           theme: "colored",
         });
         let newArray = documents.map((doc) => {
-          return doc.id === state._id ? updateUser : doc;
+          return state._id === doc._id ?updateUser : doc;
         });
         console.log("newArray", newArray);
         setDocuments(newArray);
@@ -71,7 +70,6 @@ const GetUsers = () => {
   };
   const showEditModal = (doc) => {
     setState(doc);
-    console.log(doc);
   };
 
   const handleDelete = () => {
@@ -221,6 +219,7 @@ const GetUsers = () => {
                     name="mobileNo"
                     defaultValue={state.mobileNo}
                     onChange={handleChangeFor}
+                    maxLength={12}
                   />
                 </div>
               </form>
