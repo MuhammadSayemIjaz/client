@@ -184,7 +184,7 @@ const GetUsers = () => {
                     className="form-control"
                     name="userName"
                     defaultValue={state.userName}
-                    onChange={handleChangeFor}
+                    onChange={(e) => handleChangeFor(e)}
                   />
                 </div>
                 <div className="mb-3">
@@ -196,7 +196,7 @@ const GetUsers = () => {
                     className="form-control"
                     name="age"
                     defaultValue={state.age}
-                    onChange={handleChangeFor}
+                    onChange={(e) => handleChangeFor(e)}
                   />
                 </div>
                 <div className="mb-3">
@@ -208,7 +208,7 @@ const GetUsers = () => {
                     className="form-control"
                     name="email"
                     defaultValue={state.email}
-                    onChange={handleChangeFor}
+                    onChange={(e) => handleChangeFor(e)}
                   />
                 </div>
                 <div className="mb-3">
