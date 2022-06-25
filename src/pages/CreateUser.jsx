@@ -69,6 +69,7 @@ const Create_User = () => {
                   placeholder="User Name..."
                   name="userName"
                   onChange={handleChange}
+                  required
                 />
               </InputGroup>
             </Form.Group>
@@ -82,6 +83,7 @@ const Create_User = () => {
                   placeholder="Email..."
                   name="email"
                   onChange={handleChange}
+                  required
                 />
               </InputGroup>
             </Form.Group>
@@ -95,6 +97,7 @@ const Create_User = () => {
                   placeholder="Password..."
                   name="password"
                   onChange={handleChange}
+                  required
                 />
               </InputGroup>
             </Form.Group>
@@ -108,6 +111,7 @@ const Create_User = () => {
                   placeholder="Mobile No..."
                   name="mobileNo"
                   onChange={handleChange}
+                  required
                 />
               </InputGroup>
             </Form.Group>

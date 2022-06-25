@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState , useRef } from "react";
 import {
   Table,
   Button,
@@ -16,9 +16,11 @@ const GetUsers = () => {
   const [showDeleteModel, setShowDeleteModel] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [singleDoc, setSingleDoc] = useState({});
-  const [state, setState] = useState({ userName: "", email: "", mobileNo: "" });
+  const [state, setState] = useState({});
 
   const URL = "http://localhost:8000";
+
+  const ref = useRef(null);
 
   useEffect(() => {
     axios
@@ -35,100 +37,135 @@ const GetUsers = () => {
   }, []);
 
   const handleChangeFor = (e) => {
-    console.log(e.target.value)
     setState((s) => ({ ...s, [e.target.name]: e.target.value }));
   };
-  const handleUpdateDoc = () => {
-    console.log(state._id)
-
+  const handleUpdateDoc = (e) => {
+    e.preventDefault();
   let newData = { id: state._id, userName: state.userName, email: state.email , mobileNo : state.mobileNo }
-    console.log(newData);
-    axios.put(`${URL}/updateUser`, newData)
+  console.log("New Data : " , newData);
+    axios.put(`${URL}/updateUser` , newData)
       .then((res) => {
-        console.log("message from server", res.data)
-        alert("User has been successfully updated.")
+        console.log(res)
+        toast.success("User has been successfully updated!", {
+          position: "bottom-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         setShowEditModel(false)
+        let newArray = documents.map((doc) => {
+
+          if(doc.id === state._id)
+              return console.log(...newData)
+          return doc
+      });
+      console.log(newArray);
+      setDocuments(newArray);
       })
       .catch((err) => {
-        console.error(err)
+        toast.error(err, {
+          position: "bottom-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       })
 
   }
   const showEditModal = (doc) => {
-    setShowEditModel(true);
-    console.log(doc)
+    ref.current.click();
     setState(doc);
+    console.log(doc)
   };
 
-  const EditModel = (props) => {
-    return (
-      <Modal
-        {...props}
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
+  const EditModel = () => {
+    return (<>
+    <button type="button" ref={ref} className="btn btn-primary d-none"data-bs-toggle="modal"data-bs-target="#exampleModal"
+        data-bs-whatever="@getbootstrap"></button>
+      <div
+        className="modal fade"
+        id="exampleModal"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
       >
-        <Modal.Header closeButton className="px-4">
-          <Modal.Title className="fs-2 px-3">Edit User</Modal.Title>
-        </Modal.Header>
-        <Modal.Body as="div" className="px-5">
-          <Form className="px-5" >
-            <Form.Group className="my-4">
-              <InputGroup className="mb-3" size="md">
-                <InputGroup.Text id="basic-addon1">
-                  <i className="fa-solid fa-user-large icons"></i>
-                </InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  placeholder="User Name..."
-                  name="userName"
-                  value={state.userName}
-                  onChange={handleChangeFor}
-                  // onChange={(e) => setState(s=>({...s, userName: e}))}
-                />
-              </InputGroup>
-            </Form.Group>
-            <Form.Group className="my-4">
-              <InputGroup className="mb-3" size="md">
-                <InputGroup.Text id="basic-addon1">
-                  <i className="fa-solid fa-envelope icons"></i>
-                </InputGroup.Text>
-                <Form.Control
-                  type="email"
-                  placeholder="Email..."
-                  name="email"
-                  value={state.email}
-                  onChange={handleChangeFor}
-                />
-              </InputGroup>
-            </Form.Group>
-            <Form.Group className="my-4">
-              <InputGroup className="mb-3" size="md">
-                <InputGroup.Text id="basic-addon1">
-                  <i className="fa-solid fa-phone-flip icons"></i>
-                </InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  placeholder="Mobile No..."
-                  name="mobileNo"
-                  value={state.mobileNo}
-                  onChange={handleChangeFor}
-                  // onChange={(e) => setState(s=>({...s, mobileNo: e}))}
-                />
-              </InputGroup>
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="outline-secondary"
-            className="w-25"
-            onClick={() => setShowEditModel(false)}
-          >
-            Cancle
-          </Button>
-          <Button onClick={handleUpdateDoc}>Update Data</Button>
-        </Modal.Footer>
-      </Modal>
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
+                Edit User
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <form>
+                <div className="mb-3">
+                  <label htmlFor="recipient-name" className="col-form-label">
+                    User Name:
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="userName"
+                    value={state.userName}
+                    onChange={(e) => handleChangeFor(e)}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="message-text" className="col-form-label">
+                    Email:
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="email"
+                    value={state.email}
+                    onChange={(e) => handleChangeFor(e)}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="message-text" className="col-form-label">
+                    Mobile No:
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="mobileNo"
+                    value={state.mobileNo}
+                    onChange={(e) => handleChangeFor(e)}
+                  />
+                </div>
+              </form>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancle
+              </button>
+              <button type="button" className="btn btn-primary" onClick={(e) => handleUpdateDoc(e)}>
+                Update
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
     );
   };
 
@@ -204,7 +241,7 @@ const GetUsers = () => {
   };
   return (
     <div className="container">
-      <div className="container form-section  pt-5 border">
+      <div className="container form-section  pt-5 ">
         <Table striped bordered hover responsive>
           <thead>
             <tr className="text-center fs-4 bg-dark text-white">
@@ -212,20 +249,10 @@ const GetUsers = () => {
               <th>User_Name</th>
               <th>Email</th>
               <th>Mobile_No</th>
-              <th>Acitvity</th>
+              <th style={{width : "160px"}}>Acitvity</th>
             </tr>
           </thead>
           <tbody>
-            {isLoading ? (
-              <tr>
-                <Spinner
-                  animation="grow"
-                  as={"td"}
-                  className="text-black fs-2 text-center"
-                />
-              </tr>
-            ) : (
-              <>
                 {documents.map((doc, i) => {
                   return (
                     <tr className="text-center fs-5" key={i}>
@@ -233,33 +260,28 @@ const GetUsers = () => {
                       <td>{doc.userName}</td>
                       <td>{doc.email}</td>
                       <td>{doc.mobileNo}</td>
-                      <td className="d-flex justify-content-center align-items-center">
-                        <Button
-                          variant="danger"
-                          className="mx-3"
-                          onClick={() => showDeleteModal(doc)}
-                        >
-                          Delete
-                        </Button>
-                        <Button
-                          variant="primary"
-                          className="w-25"
-                          onClick={() => showEditModal(doc)}
-                        >
-                          Edit
-                        </Button>
+                      <td className="d-flex justify-content-around align-items-center flex-wrap">
+                        <div className="tableIcons" onClick={() => showEditModal(doc)}>
+                          <i className="fa-solid fa-pen-to-square " style={{color:"green"}} ></i>
+                        </div>
+                        <div className="tableIcons" onClick={() => showDeleteModal(doc)}>
+                          <i className="fa-solid fa-trash " style={{color:"red"}} ></i>
+                        </div>
                       </td>
                     </tr>
                   );
-                })}
-              </>
+                }
             )}
           </tbody>
         </Table>
-        <EditModel
+          {/* {isLoading ? '' : <div className="spinner-section text-center mt-5 pt-5">
+            <Spinner animation="border"/>
+            </div>} */}
+        {/* <EditModel
           show={showEditModel}
           onHide={() => setShowEditModel(false)}
-        />
+        /> */}
+        <EditModel/>
         <DeleteModel
           show={showDeleteModel}
           onHide={() => setShowDeleteModel(false)}

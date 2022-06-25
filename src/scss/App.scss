@@ -1,25 +1,66 @@
 @import "~bootstrap/scss/bootstrap";
 @import 'react-toastify/dist/ReactToastify.css';
-*{
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: sans-serif;
 }
-.links:hover{
+
+.links:hover {
     color: crimson !important;
 }
 
-footer{
+footer {
     position: absolute;
     bottom: 0;
-    // top: 100px;
 }
-.form-section{
+
+.form-section {
     position: absolute;
     top: 100px;
     margin-bottom: 80px;
 }
-.tabels{
+
+.tabels {
     height: 35rem;
     overflow: scroll;
+}
+
+.spinner-border {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+}
+
+.tableIcons {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    i {
+        border: 1px solid;
+        border-radius: 3px;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        -ms-border-radius: 3px;
+        -o-border-radius: 3px;
+}
+
+    i:hover {
+        box-shadow: 4px 4px 16px -4px rgb(0 0 0 / 23%);
+
+    }
+}
+
+.tableIcons:hover {
+    background-color: whitesmoke;
 }
