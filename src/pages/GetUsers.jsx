@@ -81,8 +81,8 @@ const GetUsers = () => {
 
   }
   const showEditModal = (doc) => {
-    ref.current.click();
     setState(doc);
+    ref.current.click();
     console.log(doc)
   };
 
@@ -121,7 +121,7 @@ const GetUsers = () => {
                     className="form-control"
                     name="userName"
                     value={state.userName}
-                    onChange={(e) => handleChangeFor(e)}
+                    onChange={handleChangeFor}
                   />
                 </div>
                 <div className="mb-3">
@@ -133,7 +133,7 @@ const GetUsers = () => {
                     className="form-control"
                     name="email"
                     value={state.email}
-                    onChange={(e) => handleChangeFor(e)}
+                    onChange={handleChangeFor}
                   />
                 </div>
                 <div className="mb-3">
@@ -145,7 +145,7 @@ const GetUsers = () => {
                     className="form-control"
                     name="mobileNo"
                     value={state.mobileNo}
-                    onChange={(e) => handleChangeFor(e)}
+                    onChange={handleChangeFor}
                   />
                 </div>
               </form>
