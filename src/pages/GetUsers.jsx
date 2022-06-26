@@ -243,8 +243,7 @@ const GetUsers = () => {
           </div>
         </div>
       </div>
-      <div className="container">
-        <div className="container form-section  pt-5 ">
+        <div className="container">
           <Table striped bordered hover responsive>
             <thead>
               <tr className="text-center fs-4 bg-dark text-white">
@@ -311,7 +310,6 @@ const GetUsers = () => {
             onHide={() => setShowDeleteModel(false)}
           />
         </div>
-      </div>
     </>
   );
 };

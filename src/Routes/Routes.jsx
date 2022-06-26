@@ -7,7 +7,6 @@ import Error from "../pages/Error";
 import GetUsers from "../pages/GetUsers";
 const Routing = () => {
   return (
-    <div>
       <Router>
         <Header />
         <main>
@@ -19,7 +18,6 @@ const Routing = () => {
         </main>
         <Footer />
       </Router>
-    </div>
   );
 };
 

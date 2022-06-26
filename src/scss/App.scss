@@ -9,6 +9,10 @@
     font-family: 'Poppins', sans-serif;
 }
 
+.links:hover {
+    color: crimson !important;
+}
+
 #root {
     display: flex;
     flex-direction: column;
@@ -17,17 +21,6 @@
 
 main {
     flex: 1 0 auto;
-}
-
-.links:hover {
-    color: crimson !important;
-}
-
-
-
-.tabels {
-    height: 35rem;
-    overflow: scroll;
 }
 
 .spinner-border {

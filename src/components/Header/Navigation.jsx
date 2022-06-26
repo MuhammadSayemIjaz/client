@@ -4,11 +4,10 @@ import { Link } from 'react-router-dom';
 
 const Navigation = () => {
   return (
-    <>
-        <Navbar fixed="top" expand="md" className='navbar-section shadow bg-light'>
+        <Navbar fixed="top" expand="md" className='shadow bg-light'>
         <Container >
-          <Navbar.Brand className={" fw-bolder fs-2"}>
-            LOGO
+          <Navbar.Brand className={" fw-bolder fs-2"} style={{letterSpacing : "10px"}}>
+            MERN
           </Navbar.Brand>
           <Navbar.Toggle
             aria-controls="basic-navbar-nav"
@@ -28,7 +27,6 @@ const Navigation = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    </>
   )
 }
 
