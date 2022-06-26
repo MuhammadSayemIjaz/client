@@ -4,7 +4,8 @@ import { Form, Button, InputGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 const Create_User = () => {
-  const URL = "http://localhost:8000";
+  
+  const URL = process.env.REACT_APP_API_END_POINT;
   const navigate = useNavigate();
 
   const [state, setState] = useState({
