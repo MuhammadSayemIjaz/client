@@ -4,7 +4,7 @@ import { Form, Button, InputGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 const Create_User = () => {
-  
+
   const URL = process.env.REACT_APP_API_END_POINT;
   const navigate = useNavigate();
 
@@ -91,7 +91,7 @@ const Create_User = () => {
             <Form.Group className="my-4">
               <InputGroup className="mb-3" size="md">
                 <InputGroup.Text id="basic-addon1">
-                  <i className="fa-solid fa-key icons"></i>
+                  <i className="fa-duotoned fa-id-card icons"></i>
                 </InputGroup.Text>
                 <Form.Control
                   type="number"
