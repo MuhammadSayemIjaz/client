@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Form, Button, InputGroup } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 const Create_User = () => {
 
   const URL = process.env.REACT_APP_API_END_POINT;
-  const navigate = useNavigate();
 
   const [state, setState] = useState({
     userName: "",
@@ -49,7 +47,6 @@ const Create_User = () => {
           theme: "colored",
         });
       });
-    navigate("/getUsers");
   };
 
   return (
