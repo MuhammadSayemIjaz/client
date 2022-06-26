@@ -10,11 +10,13 @@ const Routing = () => {
     <div>
       <Router>
         <Header />
-        <Routes>
-          <Route exact path="/" element={<CreateUser />}></Route>
-          <Route exact path="/getUsers" element={<GetUsers />}></Route>
-          <Route path="/*" element={<Error />}></Route>
-        </Routes>
+        <main>
+          <Routes>
+            <Route exact path="/" element={<CreateUser />}></Route>
+            <Route exact path="/getUsers" element={<GetUsers />}></Route>
+            <Route path="/*" element={<Error />}></Route>
+          </Routes>
+        </main>
         <Footer />
       </Router>
     </div>
