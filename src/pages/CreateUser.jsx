@@ -91,7 +91,7 @@ const Create_User = () => {
             <Form.Group className="my-4">
               <InputGroup className="mb-3" size="md">
                 <InputGroup.Text id="basic-addon1">
-                  <i className="fa-duotoned fa-id-card icons"></i>
+                  <i className="fa-solid fa-id-card icons"></i>
                 </InputGroup.Text>
                 <Form.Control
                   type="number"
