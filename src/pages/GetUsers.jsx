@@ -11,7 +11,7 @@ const GetUsers = () => {
   const [singleDoc, setSingleDoc] = useState({});
   const [state, setState] = useState({ userName: "", email: "", age : "" , mobileNo: "" });
 
-  const URL = process.env.REACT_APP_API_END_POINT;
+  const URL = process.env.REACT_APP_END_POINT_API;
 
   useEffect(() => {
     axios
