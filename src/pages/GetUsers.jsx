@@ -11,7 +11,7 @@ const GetUsers = () => {
   const [singleDoc, setSingleDoc] = useState({});
   const [state, setState] = useState({ userName: "", email: "", age : "" , mobileNo: "" });
 
-  const URL = process.env.REACT_APP_END_POINT_API;
+  const URL = "https://mern-crud-operations.herokuapp.com";
 
   useEffect(() => {
     axios
