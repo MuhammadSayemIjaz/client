@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navbar , Container  , Nav } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const Navigation = () => {
   return (
@@ -15,14 +15,14 @@ const Navigation = () => {
           />
           <Navbar.Collapse id="basic-navbar-nav" className="text-dark justify-content-end">
             <Nav className="">
-              <Link to={"/"} className={"nav-link text-dark fs-5 links"}>
+              <NavLink to={"/"} className={"nav-link text-dark fs-5 links"}>
               <i className="fa-solid fa-user-plus mx-2"></i>
                 Register
-              </Link>
-              <Link to={"/getusers"} className={"nav-link text-dark fs-5 links"}>
+              </NavLink>
+              <NavLink to={"/getusers"} className={"nav-link text-dark fs-5 links"}>
               <i className="fa-solid fa-users mx-2"></i>
                 Users
-              </Link>
+              </NavLink>
             </Nav>
           </Navbar.Collapse>
         </Container>

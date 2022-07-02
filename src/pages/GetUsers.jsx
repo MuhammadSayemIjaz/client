@@ -11,8 +11,9 @@ const GetUsers = () => {
   const [singleDoc, setSingleDoc] = useState({});
   const [state, setState] = useState({ userName: "", email: "", age : "" , mobileNo: "" });
 
-  const URL = "https://mern-crud-operations.herokuapp.com";
+  const URL =  process.env.REACT_APP_API_END_POINT;
 
+  
   useEffect(() => {
     axios
       .get(`${URL}/getUsers`)
@@ -23,7 +24,7 @@ const GetUsers = () => {
       .catch((err) => {
         console.error(err);
       });
-  }, []);
+  }, [URL]);
 
   const handleChangeFor = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
@@ -68,6 +69,7 @@ const GetUsers = () => {
         });
       });
   };
+  
   const showEditModal = (doc) => {
     setState(doc);
   };

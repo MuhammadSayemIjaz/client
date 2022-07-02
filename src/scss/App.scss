@@ -9,6 +9,10 @@
     font-family: 'Poppins', sans-serif;
 }
 
+nav a.active{
+    color: crimson;
+}
+
 .links:hover {
     color: crimson !important;
 }
