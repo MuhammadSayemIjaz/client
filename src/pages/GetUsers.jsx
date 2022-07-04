@@ -237,6 +237,7 @@ const GetUsers = () => {
               <button
                 type="button"
                 className="btn btn-primary"
+                data-bs-dismiss="modal"
                 onClick={(e) => handleUpdateDoc(e)}
               >
                 Update
